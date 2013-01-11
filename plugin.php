@@ -3,7 +3,7 @@
  * Plugin Name: Genesis 404
  * Plugin URI: https://github.com/billerickson/Genesis-404-Plugin
  * Description: Customize the content of your 404 page.
- * Version: 1.0
+ * Version: 1.1
  * Author: Bill Erickson
  * Author URI: http://www.billerickson.net
  *
@@ -44,7 +44,7 @@ class BE_Genesis_404 {
 	function activation_hook() {
 		if ( 'genesis' != basename( TEMPLATEPATH ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( sprintf( __( 'Sorry, you cannot activate unless you have installed <a href="%s">Genesis</a>', 'genesis-404'), 'http://www.billerickson.net/go/genesis' ) );
+			wp_die( sprintf( __( 'Sorry, you can&rsquo;t activate unless you have installed <a href="%s">Genesis</a>', 'genesis-title-toggle'), 'http://www.billerickson.net/get-genesis' ) );
 		}
 	}
 
@@ -63,6 +63,9 @@ class BE_Genesis_404 {
 		
 		// Check to see if should be used
 		add_action( 'genesis_meta', array( $this, 'maybe_custom_404' ) );
+		
+		// Search Shortcode
+		add_shortcode( 'genesis-404-search', array( $this, 'search_shortcode' ) );
 
 	}	
 
@@ -73,10 +76,6 @@ class BE_Genesis_404 {
 	 * @author Bill Erickson
 	 */
 	function maybe_custom_404() {
-	
-		if( !function_exists( 'genesis_get_option' ) )
-			return;
-			
 		if( is_404() && genesis_get_option( 'content', 'genesis-404' ) ) {
 		
 			remove_action( 'genesis_loop', 'genesis_404' );
@@ -106,6 +105,16 @@ class BE_Genesis_404 {
 
 		echo '</div>';
 	
+	}
+	
+	/**
+	 * Search Shortcode
+	 *
+	 * @since 1.1
+	 * @author Bill Erickson
+	 */
+	function search_shortcode() {
+		return '<div class="genesis-404-search">' . get_search_form( false ) . '</div>';
 	}
 
 
