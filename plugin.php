@@ -3,7 +3,7 @@
  * Plugin Name: Genesis 404
  * Plugin URI: https://github.com/billerickson/Genesis-404-Plugin
  * Description: Customize the content of your 404 page.
- * Version: 1.1
+ * Version: 1.2
  * Author: Bill Erickson
  * Author URI: http://www.billerickson.net
  *
@@ -95,15 +95,39 @@ class BE_Genesis_404 {
 		$title = esc_attr( genesis_get_option( 'title', 'genesis-404' ) );
 		$content = genesis_get_option( 'content', 'genesis-404' );
 		
-		echo '<div class="post hentry">';
-		
-		if (!empty( $title ) )
-			echo '<h1 class="entry-title">' . $title . '</h1>';
+		// HTML 5
+		if( function_exists( 'genesis_html5' ) && genesis_html5() ) {
+			echo '<article class="page type-page status-publish entry" itemscope="" itemtype="http://schema.org/CreativeWork">';
 			
-		if( !empty( $content ) )
-			echo '<div class="entry-content">' . apply_filters( 'the_content', $content ) . '</div>';
-
-		echo '</div>';
+			if( !empty( $title ) )
+				echo '<header class="entry-header"><h1 class="entry-title" itemprop="headline">' . $title . '</h1></header>';
+			
+			do_action( 'genesis_404_before_content' );
+			
+			if( !empty( $content ) )	
+				echo '<div class="entry-content" itemprop="text">' . apply_filters( 'the_content', $content ) . '</div>';
+				
+			do_action( 'genesis_404_after_content' );
+				
+			echo '</article>';
+		
+		// HTML 4
+		} else {
+		
+			echo '<div class="post hentry">';
+			
+			if (!empty( $title ) )
+				echo '<h1 class="entry-title">' . $title . '</h1>';
+				
+			do_action( 'genesis_404_before_content' );
+				
+			if( !empty( $content ) )
+				echo '<div class="entry-content">' . apply_filters( 'the_content', $content ) . '</div>';
+				
+			do_action( 'genesis_404_after_content' );
+	
+			echo '</div>';
+		}
 	
 	}
 	
