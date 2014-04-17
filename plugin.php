@@ -3,7 +3,7 @@
  * Plugin Name: Genesis 404
  * Plugin URI: https://github.com/billerickson/Genesis-404-Plugin
  * Description: Customize the content of your 404 page.
- * Version: 1.2
+ * Version: 1.3
  * Author: Bill Erickson
  * Author URI: http://www.billerickson.net
  *
@@ -242,7 +242,7 @@ function be_register_genesis_404_settings() {
 	
 	
 		echo '<p>' . __( 'Page Content', 'genesis-404' ) . '</p>';
-		wp_editor( genesis_get_option( 'content', 'genesis-404' ), $this->get_field_id( 'content' ) ); 
+		wp_editor( genesis_get_option( 'content', 'genesis-404' ), 'content', array( 'textarea_name' => $this->get_field_id( 'content' ), ) );  
 		}
 	
 	
