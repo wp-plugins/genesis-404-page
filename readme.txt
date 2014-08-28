@@ -16,6 +16,7 @@ Use [genesis-404-search] shortcode to add a search form to the page.
 
 If you'd like to dynamically list content (ex: most recent posts), I recommend you install the [Display Posts Shortcode](http://www.wordpress.org/extend/plugins/display-posts-shortcode/) and use it in the 404 page's content.
 
+**No support will be provided by the developer**
 
 == Changelog ==
 
